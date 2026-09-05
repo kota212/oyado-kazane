@@ -134,7 +134,7 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 </head>
 <body>
 
-<div class="note-bar">構成案です。<span class="yosan">料金・キャンセル規定は仮のものです（要確認）。</span></div>
+<div class="note-bar">構成案です。<span class="yosan">お布団代（お一人¥3,000）・お支払い方法・キャンセル規定は姉妹店と同条件の仮置きです（要確認）。</span></div>
 
 <div class="head">
   <div class="wrap">
@@ -154,9 +154,9 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
     </div>
     <p class="note">おわら風の盆の期間は特別料金でのご案内です。旧町の交通規制の外側にあり、敷地内の無料駐車場はそのままお使いいただけます。</p>
     <div id="stockbox" class="stockbox">
-      <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）<span class="yosan">〔仮〕</span></b>
-      <div class="sb"><span>座敷の間（定員6名）</span><span>¥90,000</span></div>
-      <div class="sb"><span>小間（定員3名）</span><span>¥50,000</span></div>
+      <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）</b>
+      <div class="sb"><span>座敷の間（定員6名）</span><span>¥150,000</span></div>
+      <div class="sb"><span>小間（定員3名）</span><span>¥60,000</span></div>
       <div class="sbnote">座敷の間・小間とも各2室ございます。複数のお部屋を組み合わせてご希望の場合は、下の「ご要望」欄にお書きください。</div>
     </div>
   </div>
@@ -235,8 +235,8 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
       <figure><div class="im"><img src="../img/896839793.jpg" alt="お宿風音の外観" loading="lazy" decoding="async"></div><figcaption>宿の外観</figcaption></figure>
       <figure><div class="im"><img src="../img/896839789.jpg" alt="石畳の玄関" loading="lazy" decoding="async"></div><figcaption>玄関</figcaption></figure>
       <figure><div class="im"><img src="../img/896839801.jpg" alt="玄関の間" loading="lazy" decoding="async"></div><figcaption>玄関の間</figcaption></figure>
-      <figure><div class="im"><img src="../img/896846844.jpg" alt="フローリングの洋室" loading="lazy" decoding="async"></div><figcaption>洋室</figcaption></figure>
-      <figure><div class="im"><img src="../img/896846850.jpg" alt="洋室の窓側" loading="lazy" decoding="async"></div><figcaption>洋室・窓側</figcaption></figure>
+      <figure><div class="im"><img src="../img/896846611.jpg" alt="和室と押入れ" loading="lazy" decoding="async"></div><figcaption>和室・押入れ</figcaption></figure>
+      <figure><div class="im"><img src="../img/896846687.jpg" alt="続き間の和室" loading="lazy" decoding="async"></div><figcaption>続き間</figcaption></figure>
       <figure><div class="im"><img src="../img/896839781.jpg" alt="浴槽のあるお風呂" loading="lazy" decoding="async"></div><figcaption>お風呂（共用・浴槽あり）</figcaption></figure>
       <figure><div class="im"><img src="../img/896839810.jpg" alt="洗面所とお風呂" loading="lazy" decoding="async"></div><figcaption>洗面所とお風呂</figcaption></figure>
       <figure><div class="im"><img src="../img/896839806.jpg" alt="洗面台" loading="lazy" decoding="async"></div><figcaption>洗面台</figcaption></figure>
@@ -263,23 +263,23 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 const PLANS = {
   normal: [
     {id:'zashiki', name:'座敷の間', en:'Zashiki',
-     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846695.jpg"],
+     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846885.jpg","../img/896846886.jpg","../img/896846695.jpg"],
      desc:'床の間と欄間のある広い和室。畳にお布団を並べて、六名までひと間でお休みいただけます。エアコン・冷蔵庫・Wi-Fi。',
-     price:30000, cap:6, stock:2, unit:'一室・一泊'},
+     price:30000, futon:3000, cap:6, stock:2, unit:'一室・一泊'},
     {id:'koma', name:'小間', en:'Koma',
-     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846611.jpg","../img/896846885.jpg","../img/896846687.jpg","../img/896846886.jpg"],
-     desc:'三名までの落ち着いた和室。畳にお布団、エアコン・冷蔵庫・Wi-Fi。',
-     price:18000, cap:3, stock:2, unit:'一室・一泊'}
+     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846844.jpg","../img/896846850.jpg"],
+     desc:'三名までのお部屋（13㎡）。畳の和室とフローリングの洋室が一室ずつございます。エアコン・ワードローブ付き、お布団を3組ご用意します。',
+     price:19000, futon:3000, cap:3, stock:2, unit:'一室・一泊'}
   ],
   owara: [
     {id:'zashiki-o', name:'座敷の間（おわら期間）', en:'Zashiki',
-     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846695.jpg"],
-     desc:'床の間と欄間のある広い和室。六名までひと間で。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。',
-     price:90000, cap:6, stock:2, unit:'一室・一泊'},
+     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846885.jpg","../img/896846886.jpg","../img/896846695.jpg"],
+     desc:'床の間と欄間のある広い和室。六名までひと間で。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。お布団のご用意込み。',
+     price:150000, futon:0, cap:6, stock:2, unit:'一室・一泊'},
     {id:'koma-o', name:'小間（おわら期間）', en:'Koma',
-     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846611.jpg","../img/896846885.jpg","../img/896846687.jpg","../img/896846886.jpg"],
-     desc:'三名までの落ち着いた和室。おわらの三日間、荷物と車を置いて身軽に動けます。',
-     price:50000, cap:3, stock:2, unit:'一室・一泊'}
+     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846844.jpg","../img/896846850.jpg"],
+     desc:'三名までのお部屋（和室・洋室 各1室）。おわらの三日間、荷物と車を置いて身軽に動けます。お布団のご用意込み。',
+     price:60000, futon:0, cap:3, stock:2, unit:'一室・一泊'}
   ]
 };
 const yen = n => '¥' + n.toLocaleString('ja-JP');
@@ -300,7 +300,7 @@ function renderPlans(){
         <div class="chk">選択中</div>
         <b>${p.name}<span class="en">${p.en}</span></b>
         <div class="desc">${p.desc}</div>
-        <div class="price">${yen(p.price)} <span>（${p.unit}・税抜）<span class="yosan">〔仮〕</span></span></div>
+        <div class="price">${p.futon>0 ? yen(p.price)+'＋お布団代 '+yen(p.futon)+'／人' : yen(p.price)} <span>（${p.unit}・税抜）</span></div>
         <div class="stock">全${p.stock}室・定員${p.cap}名</div>
       </div>
     </div>`).join('');
@@ -351,15 +351,19 @@ function syncMode(){
   const max = plan.cap * rooms;
   const cur = Math.min(+$('guests').value || 2, max);
   $('guests').innerHTML = Array.from({length:max},(_,i)=>`<option${i+1===cur?' selected':''}>${i+1}</option>`).join('');
-  $('capnote').textContent = `このお部屋は全 ${plan.stock} 室。1室あたり定員 ${plan.cap} 名です。素泊まり・お布団のご用意込みの料金です。`;
+  $('capnote').textContent = plan.futon>0
+    ? `このお部屋は全 ${plan.stock} 室。1室あたり定員 ${plan.cap} 名。別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。`
+    : `このお部屋は全 ${plan.stock} 室。1室あたり定員 ${plan.cap} 名。お布団のご用意込みの料金です。`;
 }
 function calc(){
-  const n = +$('nights').value, rm = +$('rooms').value;
-  const total = plan.price * rm * n;
+  const n = +$('nights').value, rm = +$('rooms').value, g = +$('guests').value || 1;
+  const total = (plan.price * rm + plan.futon * g) * n;
   const tax = Math.floor(total * 0.1), incl = total + tax;
   $('total').textContent = yen(incl);
   const t2=$('total2'); if(t2) t2.textContent = yen(incl);
-  $('breakdown').innerHTML = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`
+  let lines = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`;
+  if(plan.futon>0) lines += `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
+  $('breakdown').innerHTML = lines
     + `<br>小計（税抜）　${yen(total)}<br>消費税（10%）　${yen(tax)}`
     + '<br>※ 概算です。最終金額はお返事にてご確認ください。';
   return incl;
