@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ご予約・料金｜越中八尾 お宿風音｜お部屋の写真と料金を全て公開</title>
-<meta name="description" content="越中八尾 お宿風音のご予約・料金ページ。掛け軸の間・二階の間(定員6名)、一階和室・二階洋室(定員2名)の全4室、お部屋ごとの写真と料金をすべて公開。日程を選んでお見積りし、そのまま公式LINEでご予約いただけます。">
+<meta name="description" content="越中八尾 お宿風音のご予約・料金ページ。掛け軸の間・編笠の間(定員6名)、鈴の間・月の間(定員2名)の全4室、お部屋ごとの写真と料金をすべて公開。日程を選んでお見積りし、そのまま公式LINEでご予約いただけます。">
 <link rel="canonical" href="https://oyadokazane.com/reserve/">
 <meta property="og:url" content="https://oyadokazane.com/reserve/">
 <meta property="og:image" content="https://oyadokazane.com/ogp.jpg">
@@ -184,9 +184,9 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
     <div id="stockbox" class="stockbox">
       <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）</b>
       <div class="sb"><span>掛け軸の間（定員6名）</span><span>¥150,000</span></div>
-      <div class="sb"><span>二階の間（定員6名・洗面台あり）</span><span>¥150,000</span></div>
-      <div class="sb"><span>一階和室（定員2名）</span><span>¥60,000</span></div>
-      <div class="sb"><span>二階洋室（定員2名）</span><span>¥60,000</span></div>
+      <div class="sb"><span>編笠の間（定員6名・洗面台あり）</span><span>¥150,000</span></div>
+      <div class="sb"><span>鈴の間（定員2名）</span><span>¥60,000</span></div>
+      <div class="sb"><span>月の間（定員2名）</span><span>¥60,000</span></div>
       <div class="sbnote">複数のお部屋を組み合わせてご希望の場合は、下の「ご要望」欄にお書きください。</div>
     </div>
   </div>
@@ -299,15 +299,15 @@ const PLANS = {
      desc:'床の間と欄間、掛け軸のある広い座敷。畳にお布団を並べて、六名までひと間でお休みいただけます。',
      tags:['定員6名','床の間・欄間','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
      price:30000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'nikai', name:'二階の間', en:'Nikai no Ma', pics:NIKAI_PICS,
+    {id:'nikai', name:'編笠の間', en:'Amigasa', pics:NIKAI_PICS,
      desc:'二階の広い和室。六名までひと間でお休みいただけます。お部屋に洗面台が付いています。',
      tags:['定員6名','洗面台あり','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
      price:30000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'washitsu', name:'一階和室', en:'Washitsu', pics:WASHITSU_PICS,
+    {id:'washitsu', name:'鈴の間', en:'Suzu', pics:WASHITSU_PICS,
      desc:'一階の落ち着いた畳のお部屋。お二人までのご滞在に。お布団を2組ご用意します。',
      tags:['定員2名','畳の和室','エアコン','Wi-Fi'],
      price:19000, futon:3000, cap:2, stock:1, unit:'一室・一泊'},
-    {id:'yoshitsu', name:'二階洋室', en:'Yōshitsu', pics:YOSHITSU_PICS,
+    {id:'yoshitsu', name:'月の間', en:'Tsuki', pics:YOSHITSU_PICS,
      desc:'二階のフローリングの洋室。お二人までのご滞在に。お布団を2組ご用意します。',
      tags:['定員2名','洋室','エアコン・ワードローブ','Wi-Fi'],
      price:19000, futon:3000, cap:2, stock:1, unit:'一室・一泊'}
@@ -317,15 +317,15 @@ const PLANS = {
      desc:'床の間と欄間、掛け軸のある広い座敷。六名までひと間で。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。お布団のご用意込み。',
      tags:['定員6名','床の間・欄間','お布団のご用意込み','エアコン・冷蔵庫・Wi-Fi'],
      price:150000, futon:0, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'nikai-o', name:'二階の間（おわら期間）', en:'Nikai no Ma', pics:NIKAI_PICS,
+    {id:'nikai-o', name:'編笠の間（おわら期間）', en:'Amigasa', pics:NIKAI_PICS,
      desc:'二階の広い和室、洗面台付き。六名までひと間で。おわらの三日間の拠点に。お布団のご用意込み。',
      tags:['定員6名','洗面台あり','お布団のご用意込み','エアコン・冷蔵庫・Wi-Fi'],
      price:150000, futon:0, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'washitsu-o', name:'一階和室（おわら期間）', en:'Washitsu', pics:WASHITSU_PICS,
+    {id:'washitsu-o', name:'鈴の間（おわら期間）', en:'Suzu', pics:WASHITSU_PICS,
      desc:'一階の畳のお部屋。お二人まで。荷物と車を置いて身軽に祭りへ。お布団のご用意込み。',
      tags:['定員2名','畳の和室','お布団のご用意込み','Wi-Fi'],
      price:60000, futon:0, cap:2, stock:1, unit:'一室・一泊'},
-    {id:'yoshitsu-o', name:'二階洋室（おわら期間）', en:'Yōshitsu', pics:YOSHITSU_PICS,
+    {id:'yoshitsu-o', name:'月の間（おわら期間）', en:'Tsuki', pics:YOSHITSU_PICS,
      desc:'二階のフローリングの洋室。お二人まで。おわらの三日間の拠点に。お布団のご用意込み。',
      tags:['定員2名','洋室','お布団のご用意込み','Wi-Fi'],
      price:60000, futon:0, cap:2, stock:1, unit:'一室・一泊'}
