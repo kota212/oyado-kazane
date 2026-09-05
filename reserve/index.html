@@ -24,8 +24,6 @@ body{background:var(--kuro);color:var(--shiro);font-family:var(--gothic);
 img{display:block;width:100%;height:100%;object-fit:cover}
 a{color:inherit}
 .wrap{max-width:620px;margin:0 auto;padding:0 18px}
-.note-bar{background:var(--maku);color:#A79F92;font-size:12.5px;letter-spacing:.05em;padding:11px 24px;text-align:center;line-height:1.8}
-.yosan{color:#D77B5F}
 
 .head{padding:34px 0 30px;text-align:center;border-bottom:1px solid var(--hair2)}
 .head .en{font-family:var(--latin);font-weight:600;font-size:13px;letter-spacing:.3em;color:var(--hai);text-transform:uppercase;margin-bottom:10px}
@@ -134,8 +132,6 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 </head>
 <body>
 
-<div class="note-bar">構成案です。<span class="yosan">お布団代（お一人¥3,000）・お支払い方法・キャンセル規定は姉妹店と同条件の仮置きです（要確認）。</span></div>
-
 <div class="head">
   <div class="wrap">
     <p class="en">Oyado Kazane</p>
@@ -204,8 +200,7 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
     駐車場は無料・敷地内。おわら期間中も規制の外側ですのでそのままお停めいただけます。<br>
     表示は税抜料金です。お見積りの合計は税込で表示しています。<br>
     <b>お支払い</b>：事前のお振込みをお願いしております（振込手数料はお客様のご負担でお願いいたします）。<br>
-    <b>キャンセル料</b>：30日前まで無料／29〜15日前 30％／14〜8日前 50％／7〜2日前 80％／前日・当日 100％。<br>
-    <span class="yosan">〔お支払い方法・キャンセル料は姉妹店と同条件の仮置きです。要確認〕</span>
+    <b>キャンセル料</b>：30日前まで無料／29〜15日前 30％／14〜8日前 50％／7〜2日前 80％／前日・当日 100％。
   </div>
 
   <div class="step">
@@ -259,7 +254,7 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 </div>
 
 <script>
-// 料金はすべて仮の金額。確定したらこの2か所（PRICE）を書き換えるだけで全体に反映されます。
+// 料金を変更するときは price / futon の数値を書き換えるだけで全体に反映されます。
 const PLANS = {
   normal: [
     {id:'zashiki', name:'座敷の間', en:'Zashiki',
