@@ -36,7 +36,7 @@
 - 富山空港より約14km（車で約25分）
 
 ## ページ
-- トップ: https://oyado-kazane.com/
-- おわら風の盆のご案内: https://oyado-kazane.com/owara/
-- 宿泊約款: https://oyado-kazane.com/terms/
+- トップ: https://oyadokazane.com/
+- おわら風の盆のご案内: https://oyadokazane.com/owara/
+- 宿泊約款: https://oyadokazane.com/terms/
 - 姉妹店 越中八尾 風の宿: https://kazenoyado.com/
