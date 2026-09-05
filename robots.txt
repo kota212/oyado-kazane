@@ -2,24 +2,49 @@ User-agent: *
 Allow: /
 Disallow: /reserve/
 
-# 生成AIのクロールを許可（AI検索での引用を狙う）
+# 生成AIのクロールを許可（AI検索での引用を狙う）。非公開ページは全ボット共通で除外
 User-agent: GPTBot
 Allow: /
+Disallow: /reserve/
+
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /reserve/
+
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /reserve/
+
 User-agent: ClaudeBot
 Allow: /
+Disallow: /reserve/
+
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /reserve/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /reserve/
+
 User-agent: PerplexityBot
 Allow: /
+Disallow: /reserve/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /reserve/
+
 User-agent: Google-Extended
 Allow: /
+Disallow: /reserve/
+
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /reserve/
+
 User-agent: Bingbot
 Allow: /
+Disallow: /reserve/
 
 Sitemap: https://oyadokazane.com/sitemap.xml
