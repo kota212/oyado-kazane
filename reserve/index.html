@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ご予約・料金｜越中八尾 お宿風音</title>
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kuro:#000;--sumi:#0C0B0A;--maku:#161310;
+  --shiro:#F5F2EC;--kinu:#CFC9BE;--hai:#8F8A81;
+  --akari:#C9973F;--line:#06C755;
+  --hair:rgba(245,242,236,.16);--hair2:rgba(245,242,236,.09);
+  --latin:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --mincho:'Shippori Mincho','Hiragino Mincho ProN',serif;
+  --gothic:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--kuro);color:var(--shiro);font-family:var(--gothic);
+  font-size:15px;line-height:1.95;letter-spacing:.03em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit}
+.wrap{max-width:620px;margin:0 auto;padding:0 18px}
+.note-bar{background:var(--maku);color:#A79F92;font-size:12.5px;letter-spacing:.05em;padding:11px 24px;text-align:center;line-height:1.8}
+.yosan{color:#D77B5F}
+
+.head{padding:34px 0 30px;text-align:center;border-bottom:1px solid var(--hair2)}
+.head .en{font-family:var(--latin);font-weight:600;font-size:13px;letter-spacing:.3em;color:var(--hai);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:var(--mincho);font-weight:400;font-size:22px;letter-spacing:.1em;line-height:1.7}
+.head p{font-size:12.5px;color:var(--hai);margin-top:8px;letter-spacing:.08em}
+
+.step{margin-top:44px}
+.stepno{display:inline-block;font-family:var(--latin);font-weight:600;font-size:11.5px;letter-spacing:.26em;color:var(--akari);
+  text-transform:uppercase;border-bottom:1px solid var(--akari);padding-bottom:4px;margin-bottom:14px}
+.note{font-size:12px;color:var(--hai);line-height:1.85;margin-top:10px}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{padding:15px 8px;border:1px solid var(--hair);background:var(--sumi);color:var(--shiro);font:inherit;font-size:14.5px;
+  cursor:pointer;line-height:1.5;transition:border-color .15s,background .15s}
+.seg button small{display:block;font-size:11.5px;color:var(--hai);margin-top:2px}
+.seg button[aria-pressed="true"]{background:var(--shiro);color:var(--sumi);border-color:var(--shiro)}
+.seg button[aria-pressed="true"] small{color:#6C6A64}
+
+.stockbox{display:none;margin-top:14px;border:1px solid var(--hair2);background:var(--sumi);padding:16px 18px}
+.stockbox>b{display:block;font-family:var(--mincho);font-weight:400;font-size:13.5px;letter-spacing:.06em;margin-bottom:8px}
+.stockbox .sb{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--hair2)}
+.stockbox .sb span:last-child{color:var(--akari);font-weight:700;flex:none;margin-left:12px}
+.stockbox .sbnote{font-size:12px;color:var(--hai);line-height:1.8;margin-top:9px}
+
+.plan{border:1px solid var(--hair2);background:var(--sumi);overflow:hidden;margin-bottom:16px;cursor:pointer;
+  display:block;transition:box-shadow .15s,border-color .15s}
+.plan[aria-pressed="true"]{border-color:var(--akari);box-shadow:0 0 0 2px var(--akari)}
+.plan[aria-pressed="true"] .chk{display:inline-block}
+.chk{display:none;background:var(--akari);color:#000;font-size:11.5px;font-weight:700;letter-spacing:.1em;padding:3px 12px;margin-bottom:9px}
+.gal{position:relative;background:#111}
+.slider{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
+  scrollbar-width:none;width:100%;height:300px;padding:0 6px;scroll-padding:0 6px}
+.slider::-webkit-scrollbar{display:none}
+.sl{flex:0 0 92%;height:100%;scroll-snap-align:center;overflow:hidden}
+.sl img{width:100%;height:100%;object-fit:cover;display:block}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);
+  box-shadow:0 0 3px rgba(0,0,0,.45);transition:width .2s,background .2s}
+.dots i.on{width:18px;border-radius:3px;background:#fff}
+.gal::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;
+  background:linear-gradient(transparent,rgba(0,0,0,.45))}
+@media(max-width:600px){.slider{height:260px}}
+@media(max-width:380px){.slider{height:220px}}
+.plan .in{padding:18px 18px 22px}
+.plan b{display:block;font-family:var(--mincho);font-weight:400;font-size:16.5px;letter-spacing:.08em}
+.plan b .en{font-family:var(--latin);font-weight:600;font-size:11px;letter-spacing:.22em;color:var(--hai);text-transform:uppercase;margin-left:10px}
+.plan .desc{font-size:12.5px;color:var(--kinu);line-height:1.85;margin-top:5px}
+.plan .price{font-size:14.5px;color:var(--akari);margin-top:8px;font-weight:700}
+.plan .price span{font-size:11.5px;color:var(--hai);font-weight:400}
+.plan .stock{display:inline-block;margin-top:8px;font-size:11.5px;letter-spacing:.06em;color:var(--kinu);
+  border:1px solid var(--hair2);padding:1px 10px;background:var(--maku)}
+@media(max-width:600px){
+  .plan .in{padding:15px 15px 19px}
+  .plan .desc{font-size:13.5px}
+  .plan .price{font-size:15.5px}
+}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:12.5px;color:var(--hai);margin-bottom:5px;letter-spacing:.06em}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--hair);background:var(--sumi);
+  font:inherit;font-size:15px;color:var(--shiro);border-radius:0}
+input:focus,select:focus,textarea:focus{outline:1px solid var(--akari);border-color:var(--akari)}
+input::placeholder,textarea::placeholder{color:#5C584F}
+select{appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238F8A81'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center}
+textarea{min-height:78px;resize:vertical}
+@media(max-width:600px){
+  .row{grid-template-columns:1fr}
+  label{font-size:13px}
+}
+.field{margin-bottom:14px}
+
+.total{background:var(--maku);border:1px solid var(--hair2);padding:22px;margin-top:24px}
+.total .l{font-family:var(--latin);font-weight:600;font-size:11px;color:var(--hai);letter-spacing:.24em;text-transform:uppercase}
+.total .v{font-family:var(--mincho);font-size:32px;letter-spacing:.03em;margin-top:4px;color:var(--shiro)}
+.total .b{font-size:12.5px;color:var(--kinu);margin-top:12px;line-height:1.85;border-top:1px solid var(--hair2);padding-top:12px}
+
+.warn{background:var(--maku);border:1px solid var(--hair2);border-left:3px solid var(--akari);padding:16px 18px;font-size:12.5px;
+  color:var(--kinu);line-height:1.9;margin-top:18px}
+.warn b{color:var(--shiro)}
+
+.btn{display:block;width:100%;background:var(--line);color:#fff;border:0;border-radius:999px;padding:18px;
+  font:inherit;font-weight:700;font-size:16px;letter-spacing:.04em;cursor:pointer;text-align:center;text-decoration:none;transition:filter .2s}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;border:1px solid var(--hair);color:var(--shiro);font-weight:500;font-size:14px;margin-top:12px}
+.btn.ghost:hover{border-color:var(--shiro);filter:none}
+#msg{white-space:pre-wrap;background:var(--sumi);border:1px solid var(--hair2);padding:16px;font-size:13px;
+  line-height:1.9;margin-top:12px;display:none;color:var(--kinu)}
+.done{background:rgba(6,199,85,.12);border:1px solid rgba(6,199,85,.45);color:#7ADFA0;padding:12px 14px;font-size:13px;
+  margin-top:12px;display:none}
+.datewarn{display:none;color:#E2907D;background:rgba(215,123,95,.1);border:1px solid rgba(215,123,95,.4);padding:11px 13px;font-size:12px;line-height:1.8;margin-top:10px}
+
+.photos{margin-top:60px;border-top:1px solid var(--hair2);padding-top:44px}
+.photos h2{font-family:var(--mincho);font-weight:400;font-size:18px;letter-spacing:.1em;margin-bottom:4px}
+.photos .sub{font-size:12px;color:var(--hai);margin-bottom:22px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tiles figure{margin:0}
+.tiles .im{aspect-ratio:4/3;overflow:hidden;background:#111}
+.tiles figcaption{font-size:11px;color:var(--hai);letter-spacing:.08em;padding-top:7px}
+
+footer{margin-top:56px;padding:30px 0 36px;border-top:1px solid var(--hair2);font-size:12px;color:var(--hai);line-height:2;text-align:center}
+footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-spacing:.14em;margin-bottom:8px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="note-bar">構成案です。<span class="yosan">料金・キャンセル規定は仮のものです（要確認）。</span></div>
+
+<div class="head">
+  <div class="wrap">
+    <p class="en">Oyado Kazane</p>
+    <h1>ご予約・料金のご案内</h1>
+    <p>越中八尾　お宿風音</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="step">
+    <span class="stepno">Step 1　ご宿泊の時期</span>
+    <div class="seg" id="season">
+      <button data-v="normal" aria-pressed="true">通常期<small>9/1〜3 以外</small></button>
+      <button data-v="owara" aria-pressed="false">おわら風の盆<small>9月1日〜3日</small></button>
+    </div>
+    <p class="note">おわら風の盆の期間は特別料金でのご案内です。旧町の交通規制の外側にあり、敷地内の無料駐車場はそのままお使いいただけます。</p>
+    <div id="stockbox" class="stockbox">
+      <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）<span class="yosan">〔仮〕</span></b>
+      <div class="sb"><span>座敷の間（定員6名）</span><span>¥90,000</span></div>
+      <div class="sb"><span>小間（定員3名）</span><span>¥50,000</span></div>
+      <div class="sbnote">座敷の間・小間とも各2室ございます。複数のお部屋を組み合わせてご希望の場合は、下の「ご要望」欄にお書きください。</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="stepno">Step 2　お部屋を選ぶ</span>
+    <p class="note" style="margin:-6px 0 14px">写真は指で横になぞるとご覧いただけます。</p>
+    <div id="plans"></div>
+  </div>
+
+  <div class="step">
+    <span class="stepno">Step 3　日程・人数</span>
+    <div class="row">
+      <div class="field"><label>チェックイン日</label><input type="date" id="date"></div>
+      <div class="field"><label>泊数</label>
+        <select id="nights"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>お部屋数</label>
+        <select id="rooms"><option>1</option><option>2</option></select>
+      </div>
+      <div class="field"><label>ご人数（大人・子ども合計）</label>
+        <select id="guests"></select>
+      </div>
+    </div>
+    <div class="field"><label>駐車場（無料・敷地内）</label>
+      <select id="park"><option value="0">利用しない</option><option>1</option><option>2</option><option>3</option></select>
+    </div>
+    <p class="datewarn" id="datewarn"></p>
+    <p class="note" id="capnote"></p>
+  </div>
+
+  <div class="total">
+    <div class="l">お見積り金額（税込）</div>
+    <div class="v" id="total">—</div>
+    <div class="b" id="breakdown"></div>
+  </div>
+
+  <div class="warn">
+    素泊まりの宿です。台所はございませんので、お食事は近くのお店かお持ち込みでお願いしています。<br>
+    チェックイン15:00〜21:00／チェックアウト7:00〜10:00。21時以降のご到着は事前にご相談ください。<br>
+    お風呂・お手洗いは共用です。浴槽のあるお風呂で、シャンプー類とタオルをご用意しています。<br>
+    館内は禁煙、ペットのご同伴はお断りしております。静かにお過ごしいただく時間は21時から翌7時までです。<br>
+    駐車場は無料・敷地内。おわら期間中も規制の外側ですのでそのままお停めいただけます。<br>
+    表示は税抜料金です。お見積りの合計は税込で表示しています。<br>
+    <b>お支払い</b>：事前のお振込みをお願いしております（振込手数料はお客様のご負担でお願いいたします）。<br>
+    <b>キャンセル料</b>：30日前まで無料／29〜15日前 30％／14〜8日前 50％／7〜2日前 80％／前日・当日 100％。<br>
+    <span class="yosan">〔お支払い方法・キャンセル料は姉妹店と同条件の仮置きです。要確認〕</span>
+  </div>
+
+  <div class="step">
+    <span class="stepno">Step 4　お客様のこと</span>
+    <div class="field"><label>お名前</label><input id="name" placeholder="風音　太郎"></div>
+    <div class="field"><label>お電話番号</label><input id="tel" type="tel" inputmode="tel" placeholder="090-1234-5678"></div>
+    <div class="field"><label>ご要望・ご質問（任意）</label><textarea id="memo" placeholder="到着はおそくなりそうです／お部屋を2室使いたいです　など"></textarea></div>
+  </div>
+
+  <div class="step">
+    <div class="total" style="margin-top:0;margin-bottom:14px">
+      <div class="l">お見積り金額（税込）</div>
+      <div class="v" id="total2">—</div>
+    </div>
+    <button class="btn" id="copy">この内容をコピーする</button>
+    <a class="btn ghost" href="https://lin.ee/DtTsOXK" target="_blank" rel="noopener">公式LINEを開く</a>
+    <div class="done" id="done"></div>
+    <div id="msg"></div>
+    <p class="note">コピーした内容を公式LINEのトークに貼り付けて送信いただければ、空室をお調べしてお返事します。<br>
+    ボタンが動かない場合は、下に表示される文章を長押しして選択・コピーしてください。</p>
+  </div>
+
+  <div class="photos">
+    <h2>館内のようす</h2>
+    <p class="sub">玄関からお風呂・お手洗いまで、ありのままの写真です。</p>
+    <div class="tiles">
+      <figure><div class="im"><img src="../img/896839793.jpg" alt="お宿風音の外観" loading="lazy" decoding="async"></div><figcaption>宿の外観</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839789.jpg" alt="石畳の玄関" loading="lazy" decoding="async"></div><figcaption>玄関</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839801.jpg" alt="玄関の間" loading="lazy" decoding="async"></div><figcaption>玄関の間</figcaption></figure>
+      <figure><div class="im"><img src="../img/896846844.jpg" alt="フローリングの洋室" loading="lazy" decoding="async"></div><figcaption>洋室</figcaption></figure>
+      <figure><div class="im"><img src="../img/896846850.jpg" alt="洋室の窓側" loading="lazy" decoding="async"></div><figcaption>洋室・窓側</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839781.jpg" alt="浴槽のあるお風呂" loading="lazy" decoding="async"></div><figcaption>お風呂（共用・浴槽あり）</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839810.jpg" alt="洗面所とお風呂" loading="lazy" decoding="async"></div><figcaption>洗面所とお風呂</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839806.jpg" alt="洗面台" loading="lazy" decoding="async"></div><figcaption>洗面台</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839798.jpg" alt="洗面コーナー" loading="lazy" decoding="async"></div><figcaption>洗面コーナー</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839797.jpg" alt="お手洗い" loading="lazy" decoding="async"></div><figcaption>お手洗い（共用）</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839808.jpg" alt="お手洗い" loading="lazy" decoding="async"></div><figcaption>お手洗い</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839803.jpg" alt="編笠と草履" loading="lazy" decoding="async"></div><figcaption>編笠と草履</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839804.jpg" alt="風の盆の掛け軸" loading="lazy" decoding="async"></div><figcaption>風の盆の軸</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839794.jpg" alt="おわらの手ぬぐい" loading="lazy" decoding="async"></div><figcaption>おわらの手ぬぐい</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839787.jpg" alt="おわら風の盆の踊り手" loading="lazy" decoding="async"></div><figcaption>おわら風の盆</figcaption></figure>
+      <figure><div class="im"><img src="../img/896839791.jpg" alt="おわらの町流し" loading="lazy" decoding="async"></div><figcaption>おわらの町流し</figcaption></figure>
+    </div>
+  </div>
+
+  <footer>
+    <p class="fl">越中八尾 お宿風音</p>
+    〒939-2376 富山県富山市八尾町福島141-1<br>
+    登録番号：第M160065216号
+  </footer>
+</div>
+
+<script>
+// 料金はすべて仮の金額。確定したらこの2か所（PRICE）を書き換えるだけで全体に反映されます。
+const PLANS = {
+  normal: [
+    {id:'zashiki', name:'座敷の間', en:'Zashiki',
+     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846695.jpg"],
+     desc:'床の間と欄間のある広い和室。畳にお布団を並べて、六名までひと間でお休みいただけます。エアコン・冷蔵庫・Wi-Fi。',
+     price:30000, cap:6, stock:2, unit:'一室・一泊'},
+    {id:'koma', name:'小間', en:'Koma',
+     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846611.jpg","../img/896846885.jpg","../img/896846687.jpg","../img/896846886.jpg"],
+     desc:'三名までの落ち着いた和室。畳にお布団、エアコン・冷蔵庫・Wi-Fi。',
+     price:18000, cap:3, stock:2, unit:'一室・一泊'}
+  ],
+  owara: [
+    {id:'zashiki-o', name:'座敷の間（おわら期間）', en:'Zashiki',
+     pics:["../img/896846692.jpg","../img/896846686.jpg","../img/896846694.jpg","../img/896846696.jpg","../img/896846685.jpg","../img/896846695.jpg"],
+     desc:'床の間と欄間のある広い和室。六名までひと間で。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。',
+     price:90000, cap:6, stock:2, unit:'一室・一泊'},
+    {id:'koma-o', name:'小間（おわら期間）', en:'Koma',
+     pics:["../img/896846614.jpg","../img/896846884.jpg","../img/896846611.jpg","../img/896846885.jpg","../img/896846687.jpg","../img/896846886.jpg"],
+     desc:'三名までの落ち着いた和室。おわらの三日間、荷物と車を置いて身軽に動けます。',
+     price:50000, cap:3, stock:2, unit:'一室・一泊'}
+  ]
+};
+const yen = n => '¥' + n.toLocaleString('ja-JP');
+let season = 'normal', plan = PLANS.normal[0];
+
+const $ = id => document.getElementById(id);
+
+function renderPlans(){
+  $('plans').innerHTML = PLANS[season].map((p,i)=>`
+    <div class="plan" data-i="${i}" aria-pressed="${p.id===plan.id}">
+      <div class="gal">
+        <div class="slider" data-s="${i}">${p.pics.map((u,j)=>
+          `<div class="sl"><img src="${u}" alt="${p.name} 写真${j+1}" loading="lazy"></div>`).join('')}</div>
+        ${p.pics.length>1?`<div class="dots" data-d="${i}">${p.pics.map((_,j)=>
+          `<i class="${j===0?'on':''}"></i>`).join('')}</div>`:''}
+      </div>
+      <div class="in">
+        <div class="chk">選択中</div>
+        <b>${p.name}<span class="en">${p.en}</span></b>
+        <div class="desc">${p.desc}</div>
+        <div class="price">${yen(p.price)} <span>（${p.unit}・税抜）<span class="yosan">〔仮〕</span></span></div>
+        <div class="stock">全${p.stock}室・定員${p.cap}名</div>
+      </div>
+    </div>`).join('');
+  if(!window.__nudged && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const first = document.querySelector('.slider');
+    if(first && first.children.length>1){
+      const io = new IntersectionObserver(es=>{
+        es.forEach(e=>{
+          if(!e.isIntersecting || window.__nudged) return;
+          window.__nudged = true; io.disconnect();
+          const w = first.scrollWidth / first.children.length;
+          let n = 0;
+          const nudge = ()=>{
+            first.scrollTo({left: w*0.28, behavior:'smooth'});
+            setTimeout(()=>{
+              first.scrollTo({left:0, behavior:'smooth'});
+              if(++n < 3) setTimeout(nudge, 900);
+            }, 620);
+          };
+          setTimeout(nudge, 500);
+        });
+      }, {threshold:.6});
+      io.observe(first);
+    }
+  }
+  [...document.querySelectorAll('.slider')].forEach(sl=>{
+    const dots = document.querySelector(`.dots[data-d="${sl.dataset.s}"]`);
+    if(!dots) return;
+    let tick=false;
+    sl.addEventListener('scroll', ()=>{
+      if(tick) return; tick=true;
+      requestAnimationFrame(()=>{
+        const n = Math.round(sl.scrollLeft / (sl.scrollWidth / sl.children.length));
+        [...dots.children].forEach((d,k)=>d.classList.toggle('on', k===n));
+        tick=false;
+      });
+    }, {passive:true});
+  });
+  [...document.querySelectorAll('.plan')].forEach(el=>{
+    el.addEventListener('click', ()=>{ plan = PLANS[season][+el.dataset.i]; renderPlans(); syncMode(); calc();
+      document.querySelector('.plan[aria-pressed="true"]')?.scrollIntoView({block:'nearest'}); });
+  });
+}
+function syncMode(){
+  const curR = Math.min(+$('rooms').value || 1, plan.stock);
+  $('rooms').innerHTML = Array.from({length:plan.stock},(_,i)=>`<option${i+1===curR?' selected':''}>${i+1}</option>`).join('');
+  const rooms = +$('rooms').value || 1;
+  const max = plan.cap * rooms;
+  const cur = Math.min(+$('guests').value || 2, max);
+  $('guests').innerHTML = Array.from({length:max},(_,i)=>`<option${i+1===cur?' selected':''}>${i+1}</option>`).join('');
+  $('capnote').textContent = `このお部屋は全 ${plan.stock} 室。1室あたり定員 ${plan.cap} 名です。素泊まり・お布団のご用意込みの料金です。`;
+}
+function calc(){
+  const n = +$('nights').value, rm = +$('rooms').value;
+  const total = plan.price * rm * n;
+  const tax = Math.floor(total * 0.1), incl = total + tax;
+  $('total').textContent = yen(incl);
+  const t2=$('total2'); if(t2) t2.textContent = yen(incl);
+  $('breakdown').innerHTML = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`
+    + `<br>小計（税抜）　${yen(total)}<br>消費税（10%）　${yen(tax)}`
+    + '<br>※ 概算です。最終金額はお返事にてご確認ください。';
+  return incl;
+}
+function text(){
+  const n = $('nights').value, d = $('date').value || '（未定）';
+  return `【お宿風音 ご予約の希望】
+時期：${season==='owara'?'おわら風の盆（9/1〜3）':'通常期'}
+お部屋：${plan.name}
+チェックイン：${d}
+泊数：${n}泊
+お部屋数：${$('rooms').value}室
+ご人数：${$('guests').value}名
+駐車場：${$('park').value==='0'?'利用しない':$('park').value+'台'}
+お見積り（税込）：${yen(calc())}
+お名前：${$('name').value||'（未記入）'}
+お電話番号：${$('tel').value||'（未記入）'}
+ご要望：${$('memo').value||'なし'}`;
+}
+async function copy(){
+  const t = text();
+  $('msg').textContent = t; $('msg').style.display='block';
+  let ok = false;
+  try{ await navigator.clipboard.writeText(t); ok = true; }catch(e){}
+  if(!ok){
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try{ ok = document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  if(!ok){
+    const rg=document.createRange(); rg.selectNodeContents($('msg'));
+    const s=getSelection(); s.removeAllRanges(); s.addRange(rg);
+  }
+  $('done').textContent = ok
+    ? 'コピーしました。「公式LINEを開く」からトーク画面に貼り付けて送信してください。'
+    : '下の文章が選択されています。長押し（または右クリック）でコピーし、LINEに貼り付けて送信してください。';
+  $('done').style.display='block';
+  $('done').scrollIntoView({behavior:'smooth', block:'center'});
+}
+[...document.querySelectorAll('#season button')].forEach(b=>{
+  b.onclick = ()=>{
+    season = b.dataset.v;
+    [...document.querySelectorAll('#season button')].forEach(x=>x.setAttribute('aria-pressed', x===b));
+    plan = PLANS[season][0];
+    $('stockbox').style.display = season==='owara' ? 'block' : 'none';
+    $('datewarn').style.display='none'; $('date').value='';
+    renderPlans(); syncMode(); calc();
+  };
+});
+function checkDate(){
+  const v=$('date').value; if(!v) return true;
+  const d=new Date(v+'T00:00:00'), m=d.getMonth()+1, day=d.getDate();
+  const isOwara = (m===9 && day>=1 && day<=3);
+  const warn=$('datewarn');
+  if(season==='normal' && isOwara){
+    warn.textContent='9月1日〜3日はおわら風の盆の期間です。上の「おわら風の盆」を選んでお部屋をお選びください。';
+    warn.style.display='block'; $('date').value=''; return false;
+  }
+  if(season==='owara' && !isOwara){
+    warn.textContent='おわら風の盆の料金は9月1日〜3日のご宿泊が対象です。それ以外の日は「通常期」をお選びください。';
+    warn.style.display='block'; $('date').value=''; return false;
+  }
+  warn.style.display='none'; return true;
+}
+$('date').addEventListener('change', ()=>{ checkDate(); calc(); });
+['nights','guests','park'].forEach(id=>$(id).addEventListener('change', calc));
+$('rooms').addEventListener('change', ()=>{ syncMode(); calc(); });
+$('copy').onclick = copy;
+renderPlans(); syncMode(); calc();
+</script>
+</body>
+</html>
