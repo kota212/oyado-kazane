@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /reserve/
 
 # 生成AIのクロールを許可（AI検索での引用を狙う）
 User-agent: GPTBot
