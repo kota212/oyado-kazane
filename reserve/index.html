@@ -67,6 +67,13 @@ h1{font-family:var(--mincho);font-weight:400;font-size:22px;letter-spacing:.1em;
 .dots i.on{width:18px;border-radius:3px;background:#fff}
 .gal::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;
   background:linear-gradient(transparent,rgba(0,0,0,.45))}
+.arr{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.5);color:#fff;font-size:22px;line-height:1;
+  cursor:pointer;display:none;align-items:center;justify-content:center;font-family:inherit;padding:0 0 3px;transition:background .15s}
+.arr.prev{left:10px}
+.arr.next{right:10px}
+.arr:hover{background:rgba(0,0,0,.78)}
+@media(hover:hover) and (pointer:fine){.arr{display:flex}}
 @media(max-width:600px){.slider{height:260px}}
 @media(max-width:380px){.slider{height:220px}}
 .plan .in{padding:18px 18px 22px}
@@ -161,7 +168,7 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 
   <div class="step">
     <span class="stepno">Step 2　お部屋を選ぶ</span>
-    <p class="note" style="margin:-6px 0 14px">写真は指で横になぞるとご覧いただけます。</p>
+    <p class="note" style="margin:-6px 0 14px">写真は横になぞる／矢印ボタンでご覧いただけます。</p>
     <div id="plans"></div>
   </div>
 
@@ -292,7 +299,9 @@ function renderPlans(){
         <div class="slider" data-s="${i}">${p.pics.map((u,j)=>
           `<div class="sl"><img src="${u}" alt="${p.name} 写真${j+1}" loading="lazy"></div>`).join('')}</div>
         ${p.pics.length>1?`<div class="dots" data-d="${i}">${p.pics.map((_,j)=>
-          `<i class="${j===0?'on':''}"></i>`).join('')}</div>`:''}
+          `<i class="${j===0?'on':''}"></i>`).join('')}</div>
+        <button type="button" class="arr prev" data-a="${i}" aria-label="前の写真">‹</button>
+        <button type="button" class="arr next" data-a="${i}" aria-label="次の写真">›</button>`:''}
       </div>
       <div class="in">
         <div class="chk">選択中</div>
@@ -336,6 +345,14 @@ function renderPlans(){
         tick=false;
       });
     }, {passive:true});
+  });
+  [...document.querySelectorAll('.arr')].forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.stopPropagation();
+      const sl = document.querySelector(`.slider[data-s="${b.dataset.a}"]`);
+      const w = sl.scrollWidth / sl.children.length;
+      sl.scrollBy({left: b.classList.contains('next') ? w : -w, behavior:'smooth'});
+    });
   });
   [...document.querySelectorAll('.plan')].forEach(el=>{
     el.addEventListener('click', ()=>{ plan = PLANS[season][+el.dataset.i]; renderPlans(); syncMode(); calc();
