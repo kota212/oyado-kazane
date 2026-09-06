@@ -44,5 +44,6 @@
 - [宿泊約款](https://oyadokazane.com/terms/): 取消料・利用規則
 - [姉妹店 越中八尾 風の宿](https://kazenoyado.com/): 旧町の中・町流しの通りに面した明治十年の町家
 - [掲載ポータル とやま古民家ステイ](https://toyama-kominka.com/stay/kazane/): 富山の古民家宿ポータル内のお宿風音の紹介ページ
+- [同・英語版ページ](https://toyama-kominka.com/en/stay/kazane/): Oyado Kazane（英語）の紹介ページ
 
 最終更新: 2026-09-05
