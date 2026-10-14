@@ -178,8 +178,8 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
   <div class="step">
     <span class="stepno">Step 1　ご宿泊の時期</span>
     <div class="seg" id="season">
-      <button data-v="normal" aria-pressed="true">通常期<small>9/1〜3 以外</small></button>
-      <button data-v="owara" aria-pressed="false">おわら風の盆<small>9月1日〜3日</small></button>
+      <button data-v="normal" aria-pressed="true">通常期<small>8/31〜9/3 以外</small></button>
+      <button data-v="owara" aria-pressed="false">おわら風の盆<small>8月31日〜9月3日</small></button>
     </div>
     <p class="note">おわら風の盆の期間は特別料金でのご案内です。旧町の交通規制の外側にあり、敷地内の無料駐車場はそのままお使いいただけます。</p>
     <div id="stockbox" class="stockbox">
@@ -194,7 +194,7 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
 
   <div class="step">
     <span class="stepno">Step 2　お部屋を選ぶ</span>
-    <p class="note" style="margin:-6px 0 14px">全4室。お部屋ごとの写真は横になぞる／矢印ボタンでご覧いただけます。</p>
+    <p class="note" style="margin:-6px 0 14px" id="planNote">通常期は全4室の一棟貸しです。写真は横になぞる／矢印ボタンでご覧いただけます。</p>
     <div id="plans"></div>
   </div>
 
@@ -294,24 +294,60 @@ const KAKEJIKU_PICS = ["../img/896846692.jpg","../img/896846686.jpg","../img/896
 const NIKAI_PICS    = ["../img/896846885.jpg","../img/896846886.jpg","../img/896846884.jpg"];
 const WASHITSU_PICS = ["../img/896846614.jpg","../img/896846611.jpg"];
 const YOSHITSU_PICS = ["../img/896846850.jpg","../img/896846844.jpg"];
+const _holidayCache = {};
+function jpHolidays(y){   // その年の祝日（振替休日・国民の休日を含む）。キーは 'M-D'
+  if(_holidayCache[y]) return _holidayCache[y];
+  const nthMon = (m, n) => { const w = new Date(Date.UTC(y, m-1, 1)).getUTCDay(); return 1 + ((8 - w) % 7) + (n - 1) * 7; };
+  const shunbun = Math.floor(20.8431 + 0.242194 * (y - 1980) - Math.floor((y - 1980) / 4));
+  const shubun  = Math.floor(23.2488 + 0.242194 * (y - 1980) - Math.floor((y - 1980) / 4));
+  const days = [[1,1],[1,nthMon(1,2)],[2,11],[2,23],[3,shunbun],[4,29],[5,3],[5,4],[5,5],[7,nthMon(7,3)],[8,11],[9,nthMon(9,3)],[9,shubun],[10,nthMon(10,2)],[11,3],[11,23]];
+  const set = {};
+  const key = t => (t.getUTCMonth() + 1) + '-' + t.getUTCDate();
+  days.forEach(md => { set[md[0] + '-' + md[1]] = 1; });
+  // 国民の休日：祝日と祝日に挟まれた平日
+  days.forEach(md => { const a = new Date(Date.UTC(y, md[0]-1, md[1]+1)), b = new Date(Date.UTC(y, md[0]-1, md[1]+2)); if(set[key(b)] && !set[key(a)] && a.getUTCDay() !== 0) set[key(a)] = 1; });
+  // 振替休日：日曜の祝日の直後の平日
+  days.forEach(md => { const t = new Date(Date.UTC(y, md[0]-1, md[1])); if(t.getUTCDay() !== 0) return; do { t.setUTCDate(t.getUTCDate() + 1); } while(set[key(t)]); set[key(t)] = 1; });
+  set.keiro = nthMon(9,3); set.shubun = shubun;
+  _holidayCache[y] = set;
+  return set;
+}
+function specialDay(y, m, d){   // 特定日：年末年始・ゴールデンウィーク・お盆・シルバーウィーク（5連休になる年）
+  if((m === 12 && d >= 29) || (m === 1 && d <= 3)) return true;
+  if((m === 4 && d >= 29) || (m === 5 && d <= 5)) return true;
+  if(m === 8 && d >= 12 && d <= 15) return true;
+  if(m === 9){ const h = jpHolidays(y); if(h.shubun - h.keiro === 2 && d >= h.keiro - 2 && d <= h.shubun) return true; }
+  return false;
+}
+function dayTier(y, m, d){
+  if(specialDay(y, m, d)) return 'special';
+  const w = new Date(Date.UTC(y, m-1, d)).getUTCDay();
+  return (w === 0 || w === 6 || jpHolidays(y)[m + '-' + d]) ? 'weekend' : 'weekday';
+}
+// 選んだ日程の各泊の区分（日付未選択なら平日）
+function nightTiers(dateStr, nights){
+  const out = [];
+  for(let i=0;i<nights;i++){
+    if(!dateStr){ out.push('weekday'); continue; }
+    const d = new Date(dateStr+'T00:00:00'); d.setDate(d.getDate()+i);
+    out.push(dayTier(d.getFullYear(), d.getMonth()+1, d.getDate()));
+  }
+  return out;
+}
+const TIER_LABEL = { weekday:'平日', weekend:'土日祝', special:'特定日' };
+// 一泊の宿泊費は「一棟の最低料金」と「お一人あたり×人数」の高いほう（風の宿と同じ式）
+const nightStay = (p, tier, g) => Math.max(p.rates[tier], p.pers[tier] * Math.max(1, g));
+const planNight = (p, tier, g) => nightStay(p, tier, g) + p.futon * Math.max(1, g);
+
 const PLANS = {
   normal: [
-    {id:'kakejiku', name:'掛け軸の間', en:'Kakejiku', pics:KAKEJIKU_PICS,
-     desc:'床の間と欄間、掛け軸のある広い座敷。畳にお布団を並べて、六名までひと間でお休みいただけます。',
-     tags:['定員6名','床の間・欄間','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
-     price:30000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'nikai', name:'編笠の間', en:'Amigasa', pics:NIKAI_PICS,
-     desc:'二階の広い和室。六名までひと間でお休みいただけます。お部屋に洗面台が付いています。',
-     tags:['定員6名','洗面台あり','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
-     price:30000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
-    {id:'washitsu', name:'鈴の間', en:'Suzu', pics:WASHITSU_PICS,
-     desc:'一階の落ち着いた畳のお部屋。お二人までのご滞在に。お布団を2組ご用意します。',
-     tags:['定員2名','畳の和室','エアコン','Wi-Fi'],
-     price:19000, futon:3000, cap:2, stock:1, unit:'一室・一泊'},
-    {id:'yoshitsu', name:'月の間', en:'Tsuki', pics:YOSHITSU_PICS,
-     desc:'二階のフローリングの洋室。お二人までのご滞在に。お布団を2組ご用意します。',
-     tags:['定員2名','洋室','エアコン・ワードローブ','Wi-Fi'],
-     price:19000, futon:3000, cap:2, stock:1, unit:'一室・一泊'}
+    {id:'ittou', name:'一棟貸し', en:'Whole inn',
+     pics:KAKEJIKU_PICS.concat(NIKAI_PICS, WASHITSU_PICS, YOSHITSU_PICS),
+     desc:'全4室をまるごと。掛け軸の間・編笠の間（各六名まで）と、鈴の間・月の間（各二名まで）。お風呂とお手洗いは共用、台所はありません。敷地内に無料の駐車場。',
+     tags:['最大18名','全4室 貸切','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
+     tier:true, rates:{weekday:30000, weekend:40000, special:50000},
+     pers:{weekday:4500, weekend:7000, special:9000},
+     futon:3000, cap:18, stock:1, unit:'一棟・一泊'}
   ],
   owara: [
     {id:'kakejiku-o', name:'掛け軸の間（おわら期間）', en:'Kakejiku', pics:KAKEJIKU_PICS,
@@ -333,6 +369,14 @@ const PLANS = {
   ]
 };
 const yen = n => '¥' + n.toLocaleString('ja-JP');
+// カードに出す一行。一棟貸しは、いまの人数の一泊ぶんの額だけを出す
+function cardPrice(p, g){
+  if(!p.tier) return (p.futon > 0 ? yen(p.price) + '＋お布団代 ' + yen(p.futon) + '／人' : yen(p.price))
+                   + ` <span>（${p.unit}・税抜）</span>`;
+  const n = Math.max(1, g || 1);
+  return yen(planNight(p, nightTiers($('date') ? $('date').value : '', 1)[0], n))
+       + ` <span>（${n}名・${p.unit}・税抜）</span>`;
+}
 let season = 'normal', plan = PLANS.normal[0];
 
 const $ = id => document.getElementById(id);
@@ -353,7 +397,7 @@ function renderPlans(){
         <div class="chk">選択中</div>
         <b>${p.name}<span class="en">${p.en}</span></b>
         <div class="desc">${p.desc}</div>
-        <div class="price">${p.futon>0 ? yen(p.price)+'＋お布団代 '+yen(p.futon)+'／人' : yen(p.price)} <span>（${p.unit}・税抜）</span></div>
+        <div class="price">${cardPrice(p, p.tier ? (+$('guests').value || 1) : 0)}</div>
         <div class="tags">${(p.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>
       </div>
     </div>`).join('');
@@ -412,20 +456,36 @@ function syncMode(){
   $('rooms').innerHTML = Array.from({length:plan.stock},(_,i)=>`<option${i+1===curR?' selected':''}>${i+1}</option>`).join('');
   const rooms = +$('rooms').value || 1;
   const max = plan.cap * rooms;
-  const cur = Math.min(+$('guests').value || 2, max);
+  const cur = Math.min(+$('guests').value || 1, max);   // はじめは1名の料金から
   $('guests').innerHTML = Array.from({length:max},(_,i)=>`<option${i+1===cur?' selected':''}>${i+1}</option>`).join('');
-  $('capnote').textContent = plan.futon>0
+  $('capnote').textContent = plan.tier
+    ? `全4室をまるごと、最大 ${plan.cap} 名まで。別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。`
+    : plan.futon>0
     ? `${plan.name}は一室のみ・定員 ${plan.cap} 名。別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。ほかのお部屋との組み合わせは「ご要望」欄へ。`
     : `${plan.name}は一室のみ・定員 ${plan.cap} 名。お布団のご用意込みの料金です。ほかのお部屋との組み合わせは「ご要望」欄へ。`;
 }
 function calc(){
   const n = +$('nights').value, rm = +$('rooms').value, g = +$('guests').value || 1;
-  const total = (plan.price * rm + plan.futon * g) * n;
+  let total, lines;
+  if(plan.tier){
+    const tiers = nightTiers($('date').value, n);
+    const cnt = {}; tiers.forEach(t => { cnt[t] = (cnt[t]||0) + 1; });
+    total = tiers.reduce((a, t) => a + nightStay(plan, t, g), 0) + plan.futon*g*n;
+    lines = `${plan.name}　` + ['weekday','weekend','special'].filter(t => cnt[t])
+              .map(t => `${TIER_LABEL[t]} ${yen(nightStay(plan, t, g))} × ${cnt[t]}泊`).join('＋')
+          + ($('date').value ? '' : '（日付を選ぶと土日祝・特定日の料金になります）')
+          + `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
+  }else{
+    total = (plan.price * rm + plan.futon * g) * n;
+    lines = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`;
+    if(plan.futon>0) lines += `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
+  }
   const tax = Math.floor(total * 0.1), incl = total + tax;
+  // 選んでいるお部屋のカードの数字も、いまの人数に合わせる
+  const card = document.querySelector('.plan[aria-pressed="true"] .price');
+  if(card) card.innerHTML = cardPrice(plan, plan.tier ? g : 0);
   $('total').textContent = yen(incl);
   const t2=$('total2'); if(t2) t2.textContent = yen(incl);
-  let lines = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`;
-  if(plan.futon>0) lines += `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
   $('breakdown').innerHTML = lines
     + `<br>小計（税抜）　${yen(total)}<br>消費税（10%）　${yen(tax)}`
     + '<br>※ 概算です。最終金額はお返事にてご確認ください。';
@@ -474,6 +534,9 @@ async function copy(){
     [...document.querySelectorAll('#season button')].forEach(x=>x.setAttribute('aria-pressed', x===b));
     plan = PLANS[season][0];
     $('stockbox').style.display = season==='owara' ? 'block' : 'none';
+    $('planNote').textContent = season==='owara'
+      ? 'おわら風の盆の期間はお部屋ごとのご案内です。写真は横になぞる／矢印ボタンでご覧いただけます。'
+      : '通常期は全4室の一棟貸しです。写真は横になぞる／矢印ボタンでご覧いただけます。';
     $('datewarn').style.display='none'; $('date').value='';
     renderPlans(); syncMode(); calc();
   };
@@ -481,14 +544,14 @@ async function copy(){
 function checkDate(){
   const v=$('date').value; if(!v) return true;
   const d=new Date(v+'T00:00:00'), m=d.getMonth()+1, day=d.getDate();
-  const isOwara = (m===9 && day>=1 && day<=3);
+  const isOwara = (m===8 && day===31) || (m===9 && day>=1 && day<=3);
   const warn=$('datewarn');
   if(season==='normal' && isOwara){
-    warn.textContent='9月1日〜3日はおわら風の盆の期間です。上の「おわら風の盆」を選んでお部屋をお選びください。';
+    warn.textContent='8月31日〜9月3日はおわら風の盆の期間です。上の「おわら風の盆」を選んでお部屋をお選びください。';
     warn.style.display='block'; $('date').value=''; return false;
   }
   if(season==='owara' && !isOwara){
-    warn.textContent='おわら風の盆の料金は9月1日〜3日のご宿泊が対象です。それ以外の日は「通常期」をお選びください。';
+    warn.textContent='おわら風の盆の料金は8月31日〜9月3日のご宿泊が対象です。それ以外の日は「通常期」をお選びください。';
     warn.style.display='block'; $('date').value=''; return false;
   }
   warn.style.display='none'; return true;
