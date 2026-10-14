@@ -186,8 +186,8 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
       <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）</b>
       <div class="sb"><span>掛け軸の間（定員6名）</span><span>¥150,000</span></div>
       <div class="sb"><span>編笠の間（定員6名・洗面台あり）</span><span>¥150,000</span></div>
-      <div class="sb"><span>鈴の間（定員2名）</span><span>¥60,000</span></div>
-      <div class="sb"><span>月の間（定員2名）</span><span>¥60,000</span></div>
+      <div class="sb"><span>鈴の間（定員3名）</span><span>¥60,000</span></div>
+      <div class="sb"><span>月の間（定員3名）</span><span>¥60,000</span></div>
       <div class="sbnote">複数のお部屋を組み合わせてご希望の場合は、下の「ご要望」欄にお書きください。</div>
     </div>
   </div>
@@ -343,7 +343,7 @@ const PLANS = {
   normal: [
     {id:'ittou', name:'一棟貸し', en:'Whole inn',
      pics:KAKEJIKU_PICS.concat(NIKAI_PICS, WASHITSU_PICS, YOSHITSU_PICS),
-     desc:'全4室をまるごと。掛け軸の間・編笠の間（各六名まで）と、鈴の間・月の間（各二名まで）。お風呂とお手洗いは共用、台所はありません。敷地内に無料の駐車場。',
+     desc:'全4室をまるごと。掛け軸の間・編笠の間（各六名まで）と、鈴の間・月の間（各三名まで）。お風呂とお手洗いは共用、台所はありません。敷地内に無料の駐車場。',
      tags:['最大18名','全4室 貸切','畳にお布団','エアコン・冷蔵庫・Wi-Fi'],
      tier:true, rates:{weekday:30000, weekend:40000, special:50000},
      pers:{weekday:4500, weekend:7000, special:9000},
@@ -359,13 +359,13 @@ const PLANS = {
      tags:['定員6名','洗面台あり','お布団のご用意込み','エアコン・冷蔵庫・Wi-Fi'],
      price:150000, futon:0, cap:6, stock:1, unit:'一室・一泊'},
     {id:'washitsu-o', name:'鈴の間（おわら期間）', en:'Suzu', pics:WASHITSU_PICS,
-     desc:'一階の畳のお部屋。お二人まで。荷物と車を置いて身軽に祭りへ。お布団のご用意込み。',
-     tags:['定員2名','畳の和室','お布団のご用意込み','Wi-Fi'],
-     price:60000, futon:0, cap:2, stock:1, unit:'一室・一泊'},
+     desc:'一階の畳のお部屋。三名まで。荷物と車を置いて身軽に祭りへ。お布団のご用意込み。',
+     tags:['定員3名','畳の和室','お布団のご用意込み','Wi-Fi'],
+     price:60000, futon:0, cap:3, stock:1, unit:'一室・一泊'},
     {id:'yoshitsu-o', name:'月の間（おわら期間）', en:'Tsuki', pics:YOSHITSU_PICS,
-     desc:'二階のフローリングの洋室。お二人まで。おわらの三日間の拠点に。お布団のご用意込み。',
-     tags:['定員2名','洋室','お布団のご用意込み','Wi-Fi'],
-     price:60000, futon:0, cap:2, stock:1, unit:'一室・一泊'}
+     desc:'二階のフローリングの洋室。三名まで。おわらの三日間の拠点に。お布団のご用意込み。',
+     tags:['定員3名','洋室','お布団のご用意込み','Wi-Fi'],
+     price:60000, futon:0, cap:3, stock:1, unit:'一室・一泊'}
   ]
 };
 const yen = n => '¥' + n.toLocaleString('ja-JP');
