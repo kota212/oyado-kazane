@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-<url><loc>https://oyadokazane.com/</loc><lastmod>2026-10-10</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
+<url><loc>https://oyadokazane.com/</loc><lastmod>2026-10-14</lastmod><changefreq>weekly</changefreq><priority>1.0</priority>
 <image:image><image:loc>https://oyadokazane.com/img/13.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/896846692.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/896846885.jpg</image:loc></image:image>
@@ -8,13 +8,28 @@
 <image:image><image:loc>https://oyadokazane.com/img/896846850.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/14.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/03.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/owara-machinagashi.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/ogp.jpg</image:loc></image:image>
 </url>
-<url><loc>https://oyadokazane.com/owara/</loc><lastmod>2026-10-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
-<image:image><image:loc>https://oyadokazane.com/img/00.jpg</image:loc></image:image>
+<url><loc>https://oyadokazane.com/owara/</loc><lastmod>2026-10-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<image:image><image:loc>https://oyadokazane.com/img/owara-stairs.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/owara-machinagashi.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/owara-line.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/owara-onna.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/owara-pair.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/yatsuo-dusk.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/04.jpg</image:loc></image:image>
 <image:image><image:loc>https://oyadokazane.com/img/05.jpg</image:loc></image:image>
-<image:image><image:loc>https://oyadokazane.com/img/11.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/ogp-owara.jpg</image:loc></image:image>
+</url>
+<url><loc>https://oyadokazane.com/group/</loc><lastmod>2026-10-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority>
+<image:image><image:loc>https://oyadokazane.com/img/13.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/01.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/14.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/896846692.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/896846885.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/896846614.jpg</image:loc></image:image>
+<image:image><image:loc>https://oyadokazane.com/img/896846850.jpg</image:loc></image:image>
 </url>
 <url><loc>https://oyadokazane.com/terms/</loc><lastmod>2026-09-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>
