@@ -184,10 +184,11 @@ footer .fl{font-family:var(--mincho);color:var(--shiro);font-size:14px;letter-sp
     <p class="note">おわら風の盆の期間は特別料金でのご案内です。旧町の交通規制の外側にあり、敷地内の無料駐車場はそのままお使いいただけます。</p>
     <div id="stockbox" class="stockbox">
       <b>おわら期間のお部屋と料金（全4室・一室一泊 税抜）</b>
-      <div class="sb"><span>掛け軸の間（定員6名）</span><span>¥120,000</span></div>
-      <div class="sb"><span>編笠の間（定員6名・洗面台あり）</span><span>¥120,000</span></div>
-      <div class="sb"><span>鈴の間（定員3名）</span><span>¥60,000</span></div>
-      <div class="sb"><span>月の間（定員3名）</span><span>¥60,000</span></div>
+      <div class="sb"><span>掛け軸の間（定員6名・四名様まで）</span><span>¥120,000</span></div>
+      <div class="sb"><span>編笠の間（定員6名・洗面台あり・四名様まで）</span><span>¥120,000</span></div>
+      <div class="sb"><span>鈴の間（定員3名・お二人まで）</span><span>¥60,000</span></div>
+      <div class="sb"><span>月の間（定員3名・お二人まで）</span><span>¥60,000</span></div>
+      <div class="sbnote">掛け軸の間・編笠の間は五名様目から、鈴の間・月の間は三名様目から、お一人につき ¥30,000 を加えます。</div>
       <div class="sbnote">別途お布団代（お一人一泊 ¥3,000）を頂戴します。</div>
       <div class="sbnote">複数のお部屋を組み合わせてご希望の場合は、下の「ご要望」欄にお書きください。</div>
     </div>
@@ -339,6 +340,13 @@ const TIER_LABEL = { weekday:'平日', weekend:'土日祝', special:'特定日' 
 // 一泊の宿泊費は「一棟の最低料金」と「お一人あたり×人数」の高いほう（風の宿と同じ式）
 const nightStay = (p, tier, g) => Math.max(p.rates[tier], p.pers[tier] * Math.max(1, g));
 const planNight = (p, tier, g) => nightStay(p, tier, g) + p.futon * Math.max(1, g);
+// おわら期間の一室の料金（税抜・お布団代は別）。extra を持つ部屋は from 人目からお一人につき fee を足す
+function roomPrice(p, g){
+  const base = Number(p.price) || 0;
+  if(!p.extra) return base;
+  return base + Math.max(0, Math.max(1, g || 1) - (p.extra.from - 1)) * p.extra.fee;
+}
+const extraNote = p => p.extra ? `${p.extra.from}名様目から、お一人につき ${yen(p.extra.fee)} を加えます。` : '';
 
 const PLANS = {
   normal: [
@@ -352,28 +360,31 @@ const PLANS = {
   ],
   owara: [
     {id:'kakejiku-o', name:'掛け軸の間（おわら期間）', en:'Kakejiku', pics:KAKEJIKU_PICS,
-     desc:'床の間と欄間、掛け軸のある広い座敷。六名までひと間で。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。お布団代はご人数分を別途頂戴します。',
-     tags:['定員6名','床の間・欄間','お布団代 別途','エアコン・冷蔵庫・Wi-Fi'],
-     price:120000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
+     desc:'床の間と欄間、掛け軸のある広い座敷。六名までひと間で。四名様までは120,000円、五名様目からお一人につき30,000円を加えます。車を停めて歩いて祭りへ、夜遅くに戻れる三日間の拠点に。お布団代はご人数分を別途頂戴します。',
+     tags:['定員6名','床の間・欄間','五名様目から＋¥30,000','お布団代 別途','エアコン・冷蔵庫・Wi-Fi'],
+     price:120000, futon:3000, cap:6, stock:1, unit:'一室・一泊', extra:{from:5, fee:30000}},
     {id:'nikai-o', name:'編笠の間（おわら期間）', en:'Amigasa', pics:NIKAI_PICS,
-     desc:'二階の広い和室、洗面台付き。六名までひと間で。おわらの三日間の拠点に。お布団代はご人数分を別途頂戴します。',
-     tags:['定員6名','洗面台あり','お布団代 別途','エアコン・冷蔵庫・Wi-Fi'],
-     price:120000, futon:3000, cap:6, stock:1, unit:'一室・一泊'},
+     desc:'二階の広い和室、洗面台付き。六名までひと間で。四名様までは120,000円、五名様目からお一人につき30,000円を加えます。おわらの三日間の拠点に。お布団代はご人数分を別途頂戴します。',
+     tags:['定員6名','洗面台あり','五名様目から＋¥30,000','お布団代 別途','エアコン・冷蔵庫・Wi-Fi'],
+     price:120000, futon:3000, cap:6, stock:1, unit:'一室・一泊', extra:{from:5, fee:30000}},
     {id:'washitsu-o', name:'鈴の間（おわら期間）', en:'Suzu', pics:WASHITSU_PICS,
-     desc:'一階の畳のお部屋。三名まで。荷物と車を置いて身軽に祭りへ。お布団代はご人数分を別途頂戴します。',
-     tags:['定員3名','畳の和室','お布団代 別途','Wi-Fi'],
-     price:60000, futon:3000, cap:3, stock:1, unit:'一室・一泊'},
+     desc:'一階の畳のお部屋。お二人までは60,000円、三名様目からお一人につき30,000円を加えます。荷物と車を置いて身軽に祭りへ。お布団代はご人数分を別途頂戴します。',
+     tags:['定員3名','畳の和室','三名様目から＋¥30,000','お布団代 別途','Wi-Fi'],
+     price:60000, futon:3000, cap:3, stock:1, unit:'一室・一泊', extra:{from:3, fee:30000}},
     {id:'yoshitsu-o', name:'月の間（おわら期間）', en:'Tsuki', pics:YOSHITSU_PICS,
-     desc:'二階のフローリングの洋室。三名まで。おわらの三日間の拠点に。お布団代はご人数分を別途頂戴します。',
-     tags:['定員3名','洋室','お布団代 別途','Wi-Fi'],
-     price:60000, futon:3000, cap:3, stock:1, unit:'一室・一泊'}
+     desc:'二階のフローリングの洋室。お二人までは60,000円、三名様目からお一人につき30,000円を加えます。おわらの三日間の拠点に。お布団代はご人数分を別途頂戴します。',
+     tags:['定員3名','洋室','三名様目から＋¥30,000','お布団代 別途','Wi-Fi'],
+     price:60000, futon:3000, cap:3, stock:1, unit:'一室・一泊', extra:{from:3, fee:30000}}
   ]
 };
 const yen = n => '¥' + n.toLocaleString('ja-JP');
 // カードに出す一行。一棟貸しは、いまの人数の一泊ぶんの額だけを出す
 function cardPrice(p, g){
-  if(!p.tier) return (p.futon > 0 ? yen(p.price) + '＋お布団代 ' + yen(p.futon) + '／人' : yen(p.price))
-                   + ` <span>（${p.unit}・税抜）</span>`;
+  if(!p.tier){
+    const stay = roomPrice(p, g);
+    return (p.futon > 0 ? yen(stay) + '＋お布団代 ' + yen(p.futon) + '／人' : yen(stay))
+         + ` <span>（${p.unit}・税抜）</span>`;
+  }
   const n = Math.max(1, g || 1);
   return yen(planNight(p, nightTiers($('date') ? $('date').value : '', 1)[0], n))
        + ` <span>（${n}名・${p.unit}・税抜）</span>`;
@@ -462,7 +473,7 @@ function syncMode(){
   $('capnote').textContent = plan.tier
     ? `全4室をまるごと、最大 ${plan.cap} 名まで。別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。`
     : plan.futon>0
-    ? `${plan.name}は一室のみ・定員 ${plan.cap} 名。別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。ほかのお部屋との組み合わせは「ご要望」欄へ。`
+    ? `${plan.name}は一室のみ・定員 ${plan.cap} 名。` + extraNote(plan) + `別途お布団代（お一人 ${yen(plan.futon)}）を頂戴します。ほかのお部屋との組み合わせは「ご要望」欄へ。`
     : `${plan.name}は一室のみ・定員 ${plan.cap} 名。お布団のご用意込みの料金です。ほかのお部屋との組み合わせは「ご要望」欄へ。`;
 }
 function calc(){
@@ -477,14 +488,16 @@ function calc(){
           + ($('date').value ? '' : '（日付を選ぶと土日祝・特定日の料金になります）')
           + `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
   }else{
-    total = (plan.price * rm + plan.futon * g) * n;
+    const ex = roomPrice(plan, g) - plan.price;   // 三名目からの追加（一室しかない部屋のみ）
+    total = (plan.price * rm + ex + plan.futon * g) * n;
     lines = `${plan.name}　${yen(plan.price)} × ${rm}室 × ${n}泊`;
+    if(ex>0) lines += `<br>${plan.extra.from}名様目からの追加　${yen(plan.extra.fee)} × ${g - (plan.extra.from - 1)}名 × ${n}泊`;
     if(plan.futon>0) lines += `<br>お布団代　${yen(plan.futon)} × ${g}名 × ${n}泊`;
   }
   const tax = Math.floor(total * 0.1), incl = total + tax;
   // 選んでいるお部屋のカードの数字も、いまの人数に合わせる
   const card = document.querySelector('.plan[aria-pressed="true"] .price');
-  if(card) card.innerHTML = cardPrice(plan, plan.tier ? g : 0);
+  if(card) card.innerHTML = cardPrice(plan, g);
   $('total').textContent = yen(incl);
   const t2=$('total2'); if(t2) t2.textContent = yen(incl);
   $('breakdown').innerHTML = lines
